@@ -80,8 +80,7 @@ const ProfileSchema = new Schema({
   }
 });
 ProfileSchema.index({
-  handle: 'text',
-  user: 'text'
+  handle: 'text'
 });
 
 module.exports = Profile = mongoose.model('profile', ProfileSchema);

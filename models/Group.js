@@ -53,27 +53,6 @@ const GroupSchema = new Schema({
       type: String
     }
   },
-  events: [{
-    name: {
-      type: String,
-      required: true
-    },
-    start: {
-      type: Date,
-      required: true
-    },
-    end: {
-      type: Date,
-      required: true
-    },
-    location: {
-      type: String,
-      required: true
-    },
-    description: {
-      type: String
-    }
-  }],
   date: {
     type: Date,
     default: Date.now

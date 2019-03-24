@@ -11,8 +11,7 @@ class PostFeed extends Component {
 }
 
 PostFeed.propTypes = {
-  posts: PropTypes.array.isRequired,
-  profile: PropTypes.object.isRequired
+  posts: PropTypes.array.isRequired
 };
 
 export default PostFeed;

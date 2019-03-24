@@ -28,8 +28,6 @@ class Wall extends Component {
     if (profile === null || loading) {
       WallContent = <Spinner />;
     } else {
-      console.log(profile._id);
-      console.log(this.props);
       WallContent = (
         <div>
           <ProfileHeader profile={profile} />

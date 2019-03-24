@@ -10,6 +10,8 @@ class Trip extends Component {
       }
   
     render() {
+    //const {trip} = this.props;
+    // In next line trip.map
     const tripItems = this.props.trip.map(trp => (
       <li key={trp._id} className="d-flex list-group-item justify-content-center align-items-center flex-column bg-light">
         <h4>{trp.name}</h4>
