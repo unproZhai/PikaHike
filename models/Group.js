@@ -17,8 +17,16 @@ const GroupSchema = new Schema({
   avatar: {
     type: String
   },
-  zip: {
+  background: {
     type: String
+  },
+  zip: {
+    type: String,
+    required: true
+  },
+  country: {
+    type: String,
+    required: true
   },
   skillstatus: {
     type: String,
@@ -39,6 +47,29 @@ const GroupSchema = new Schema({
   bio: {
     type: String
   },
+  ownerid: {
+    type:String,
+    required:true
+  },
+  trip: [{
+    name: {
+      type: String,
+      required: true
+    },
+    date: {
+      type: Date,
+    },
+    location: {
+      type: String,
+      required: true
+    },
+    description: {
+      type: String
+    },
+    difficulty: {
+      type: String,
+    }
+  }],
   social: {
     youtube: {
       type: String
@@ -53,10 +84,37 @@ const GroupSchema = new Schema({
       type: String
     }
   },
+  events: [{
+    name: {
+      type: String,
+      required: true
+    },
+    start: {
+      type: Date,
+      required: true
+    },
+    end: {
+      type: Date,
+      required: true
+    },
+    location: {
+      type: String,
+      required: true
+    },
+    description: {
+      type: String
+    }
+  }],
   date: {
     type: Date,
     default: Date.now
-  }
+  },
+  teammember: [{
+    ids: {
+      type: String,
+      required: true
+    }
+  }]
 });
 GroupSchema.index({
   handle: 'text'

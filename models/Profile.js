@@ -15,11 +15,16 @@ const ProfileSchema = new Schema({
   avatar: {
     type: String
   },
-  gender: {
+  background: {
     type: String
   },
   zip: {
-    type: String
+    type: String,
+    required: true
+  },
+  country: {
+    type: String,
+    required: true
   },
   skillstatus: {
     type: String,
@@ -60,6 +65,26 @@ const ProfileSchema = new Schema({
       type: String,
     }
   }],
+  match: {
+    skillMin: {
+      type: String
+    },
+    skillMax: {
+      type: String
+    },
+    travel: {
+      type: String
+    },
+    camp: {
+      type: String
+    },
+    climber: {
+      type: String
+    },
+    country: {
+      type: String
+    }
+  },
   social: {
     youtube: {
       type: String
@@ -80,7 +105,8 @@ const ProfileSchema = new Schema({
   }
 });
 ProfileSchema.index({
-  handle: 'text'
+  handle: 'text',
+  user: 'text'
 });
 
 module.exports = Profile = mongoose.model('profile', ProfileSchema);

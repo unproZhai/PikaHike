@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginUser } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
-//getProfileCreted
 
 class Login extends Component {
   constructor() {
@@ -27,21 +26,16 @@ class Login extends Component {
   componentWillReceiveProps(nextProps) {
     const first = localStorage.getItem("first");
     if (nextProps.auth.isAuthenticated) {
-      if (first == "false")
-      {
+      if (first === "false") {
         this.props.history.push({
           pathname: '/create-profile',
-          state: { email: this.state.email}
+          state: { email: this.state.email }
         })
-        //this.props.history.push('/create-profile');
       }
-      else
-      {
+      else {
         this.props.history.push('/feed');
       }
-      
     }
-
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
@@ -54,7 +48,6 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password
     };
-
     this.props.loginUser(userData);
   }
 
@@ -70,7 +63,7 @@ class Login extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Log In</h1>
+              <h1 className="display-4 text-center">Login</h1>
               <p className="lead text-center">
                 Sign in to your account
               </p>
@@ -83,7 +76,6 @@ class Login extends Component {
                   onChange={this.onChange}
                   error={errors.email}
                 />
-
                 <TextFieldGroup
                   placeholder="Password"
                   name="password"
@@ -92,11 +84,12 @@ class Login extends Component {
                   onChange={this.onChange}
                   error={errors.password}
                 />
-                <input type="submit" className="btn btn-secondary btn-block mt-4" />
+                <input type="submit" className="btn btn-dark btn-block mt-4" />
               </form>
             </div>
           </div>
         </div>
+        <br />
       </div>
     );
   }
@@ -115,4 +108,4 @@ const mapStateToProps = state => ({
   first: state.first
 });
 
-export default connect(mapStateToProps, { loginUser})(Login);
+export default connect(mapStateToProps, { loginUser })(Login);

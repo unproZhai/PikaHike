@@ -10,6 +10,37 @@ import {
   DELETE_POST
 } from './types';
 
+//====================================================================================
+
+/*
+  FUNCTIONS:
+    - addPersonalPost
+    - getPersonalPosts
+    - getPersonalPost
+    - deletePersonalPost
+    - addPersonalLike
+    - removePersonalLike
+    - addPersonalComment
+    - deletePersonalComment
+    - addPersonalNEWComment
+    - deletePersonaNEWComment
+    - addPost
+    - getPosts
+    - getPost
+    - deletePost
+    - addLike
+    - removeLike
+    - addComment
+    - deleteComment
+    - addNEWComment
+    - deleteNEWComment
+    - setPostLoading
+    - clearErrors
+*/
+
+//====================================================================================
+
+
 // Add Personal Posts
 export const addPersonalPost = postData => dispatch => {
   dispatch(clearErrors());
@@ -33,14 +64,14 @@ export const addPersonalPost = postData => dispatch => {
 export const getPersonalPosts = handle => dispatch => {
   dispatch(setPostLoading());
   axios
-    .post('/api/posts/getpersonal',handle = {handle})
+    .post('/api/posts/getpersonal', handle = { handle })
     .then(res =>
       dispatch({
         type: GET_POSTS,
         payload: res.data
       })
     )
-    .catch(err =>
+    .catch(_err =>
       dispatch({
         type: GET_ERRORS,
         payload: null
@@ -59,7 +90,7 @@ export const getPersonalPost = id => dispatch => {
         payload: res.data
       })
     )
-    .catch(err =>
+    .catch(_err =>
       dispatch({
         type: GET_ERRORS,
         payload: null
@@ -71,7 +102,7 @@ export const getPersonalPost = id => dispatch => {
 export const deletePersonalPost = id => dispatch => {
   axios
     .delete(`/api/posts/delete/${id}`)
-    .then(res =>
+    .then(_res =>
       dispatch({
         type: DELETE_POST,
         payload: id
@@ -84,7 +115,6 @@ export const deletePersonalPost = id => dispatch => {
       })
     );
 };
-
 
 // Add like
 export const addPersonalLike = postId => dispatch => {
@@ -122,13 +152,12 @@ export const removePersonalLike = postId => dispatch => {
     );
 };
 
-
 // Add Comment
 export const addPersonalComment = (postId, commentData) => dispatch => {
   dispatch(clearErrors());
   axios
     .post(`/api/posts/comment/personal/${postId}`, commentData)
-    .then(res =>
+    .then(_res =>
       dispatch(getPersonalPost())
     )
     .catch(err =>
@@ -138,14 +167,12 @@ export const addPersonalComment = (postId, commentData) => dispatch => {
       })
     );
 };
-
-
 
 // Delete Comment
 export const deletePersonalComment = (postId, commentId) => dispatch => {
   axios
     .delete(`/api/posts/comment/personal/${postId}/${commentId}`)
-    .then(res =>
+    .then(_res =>
       dispatch(getPersonalPost())
     )
     .catch(err =>
@@ -156,7 +183,7 @@ export const deletePersonalComment = (postId, commentId) => dispatch => {
     );
 };
 
-// Add Nonrefresh Comment
+// Add Non-refresh Comment
 export const addPersonalNEWComment = (postId, commentData) => dispatch => {
   dispatch(clearErrors());
   axios
@@ -175,25 +202,7 @@ export const addPersonalNEWComment = (postId, commentData) => dispatch => {
     );
 };
 
-// Delete Comment
-export const deletePersonaNEWComment = (postId, commentId) => dispatch => {
-  axios
-    .delete(`/api/posts/comment/personal/${postId}/${commentId}`)
-    .then(res =>
-      dispatch({
-        type: GET_POST,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
 
-//=======================================================================================
 // Add Post
 export const addPost = postData => dispatch => {
   dispatch(clearErrors());
@@ -224,7 +233,7 @@ export const getPosts = () => dispatch => {
         payload: res.data
       })
     )
-    .catch(err =>
+    .catch(_err =>
       dispatch({
         type: GET_POSTS,
         payload: null
@@ -243,7 +252,7 @@ export const getPost = id => dispatch => {
         payload: res.data
       })
     )
-    .catch(err =>
+    .catch(_err =>
       dispatch({
         type: GET_POST,
         payload: null
@@ -255,7 +264,7 @@ export const getPost = id => dispatch => {
 export const deletePost = id => dispatch => {
   axios
     .delete(`/api/posts/${id}`)
-    .then(res =>
+    .then(_res =>
       dispatch({
         type: DELETE_POST,
         payload: id
@@ -305,13 +314,12 @@ export const removeLike = postId => dispatch => {
     );
 };
 
-
 // Add Comment
 export const addComment = (postId, commentData) => dispatch => {
   dispatch(clearErrors());
   axios
     .post(`/api/posts/comment/${postId}`, commentData)
-    .then(res =>
+    .then(_res =>
       dispatch(getPost())
     )
     .catch(err =>
@@ -321,14 +329,12 @@ export const addComment = (postId, commentData) => dispatch => {
       })
     );
 };
-
-
 
 // Delete Comment
 export const deleteComment = (postId, commentId) => dispatch => {
   axios
     .delete(`/api/posts/comment/${postId}/${commentId}`)
-    .then(res =>
+    .then(_res =>
       dispatch(getPost())
     )
     .catch(err =>
@@ -339,7 +345,7 @@ export const deleteComment = (postId, commentId) => dispatch => {
     );
 };
 
-// Add Nonrefresh Comment
+// Add Non-refresh Comment
 export const addNEWComment = (postId, commentData) => dispatch => {
   dispatch(clearErrors());
   axios
@@ -357,25 +363,6 @@ export const addNEWComment = (postId, commentData) => dispatch => {
       })
     );
 };
-
-// Delete Nonrefresh Comment
-export const deleteNEWComment = (postId, commentId) => dispatch => {
-  axios
-    .delete(`/api/posts/comment/${postId}/${commentId}`)
-    .then(res =>
-      dispatch({
-        type: GET_POST,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
-
 
 // Set loading state
 export const setPostLoading = () => {

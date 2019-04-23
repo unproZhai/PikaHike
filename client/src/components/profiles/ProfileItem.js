@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import defaultAvatar from '../../img/defaultAvatar.jpg';
 
 class ProfileItem extends Component {
   render() {
     const { profile } = this.props;
+    var profileAvatar;
+
+    if (profile.avatar === '') {
+      profileAvatar = defaultAvatar;
+    }
+    else {
+      profileAvatar = profile.avatar;
+    }
 
     return (
       <div className="card card-body bg-light mb-3">
         <div className="row">
-          <div className="col-2">
-            <img src={profile.avatar} alt="" className="rounded-circle" />
+          <div className="col-2 d-none d-sm-block">
+            <img src={profileAvatar} alt="" className="rounded-circle" />
           </div>
-          <div className="col-lg-6 col-md-4 col-8">
+          <div className="col">
             <h3>{profile.user.name}</h3>
             <p>
               {profile.status}{' '}

@@ -6,9 +6,35 @@ import {
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
   GET_ERRORS,
-  SET_CURRENT_USER,
-  SEARCH_HANDLES
+  SET_CURRENT_USER
 } from './types';
+
+//====================================================================================
+
+/*
+  FUNCTIONS:
+    - getCurrentProfile
+    - getProfileByHandle
+    - searchProfiles
+    - createProfile
+    - addTrip
+    - addMatchData
+    - deleteTrip
+    - getProfiles
+    - matchPCombo
+    - matchPTC
+    - matchPTCL
+    - matchPT
+    - matchPCC
+    - matchPC
+    - matchPCL
+    - matchProfiles
+    - deleteAccount
+    - setProfileLoading
+    - clearCurrentProfile
+*/
+
+//====================================================================================
 
 // Get current profile
 export const getCurrentProfile = () => dispatch => {
@@ -21,7 +47,7 @@ export const getCurrentProfile = () => dispatch => {
         payload: res.data
       })
     )
-    .catch(err =>
+    .catch(_err =>
       dispatch({
         type: GET_PROFILE,
         payload: {}
@@ -40,7 +66,7 @@ export const getProfileByHandle = handle => dispatch => {
         payload: res.data
       })
     )
-    .catch(err =>
+    .catch(_err =>
       dispatch({
         type: GET_PROFILE,
         payload: null
@@ -55,37 +81,23 @@ export const searchProfiles = query => dispatch => {
     .get(`/api/profile/${query}`)
     .then(res =>
       dispatch({
-        type: SEARCH_HANDLES,
+        type: GET_PROFILES,
         payload: res.data
       })
     )
-    .catch(err =>
+    .catch(_err =>
       dispatch({
-        type: SEARCH_HANDLES,
+        type: GET_PROFILES,
         payload: null
       })
     );
 };
 
-
 // Create Profile
 export const createProfile = (profileData, history) => dispatch => {
   axios
     .post('/api/profile', profileData)
-    .then(res => history.push('/dashboard'))
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
-
-// Add experience
-export const addExperience = (expData, history) => dispatch => {
-  axios
-    .post('/api/profile/experience', expData)
-    .then(res => history.push('/dashboard'))
+    .then(_res => history.push('/feed'))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -98,7 +110,7 @@ export const addExperience = (expData, history) => dispatch => {
 export const addTrip = (tripData, history) => dispatch => {
   axios
     .post('/api/profile/trips', tripData)
-    .then(res => history.push('/EditTrip'))
+    .then(_res => history.push('/edit-trips'))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -107,16 +119,11 @@ export const addTrip = (tripData, history) => dispatch => {
     );
 };
 
-// Delete Experience
-export const deleteExperience = id => dispatch => {
+//Add match data
+export const addMatchData = (matchData, history) => dispatch => {
   axios
-    .delete(`/api/profile/experience/${id}`)
-    .then(res =>
-      dispatch({
-        type: GET_PROFILE,
-        payload: res.data
-      })
-    )
+    .post(`/api/profile/matchData`, matchData)
+    .then(_res => history.push(`/matches`))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -148,13 +155,219 @@ export const getProfiles = () => dispatch => {
   dispatch(setProfileLoading());
   axios
     .get('/api/profile/all')
+    .then(res => {
+      dispatch({
+        type: GET_PROFILES,
+        payload: res.data
+      })
+    }
+    )
+    .catch(_err =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: null
+      })
+    );
+};
+
+// matchPCombo - Travel, Camp, and Climb
+export const matchPCombo = (matchData, userHandle) => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get('/api/group/matchPCombo', {
+      params: {
+        skillMin: matchData.skillMin, 
+        skillMax: matchData.skillMax,
+        handle: userHandle
+      }
+    }) 
     .then(res =>
       dispatch({
         type: GET_PROFILES,
         payload: res.data
       })
     )
-    .catch(err =>
+    .catch(_err =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: null
+      })
+    );
+};
+
+// matchPTC - Travel and Camp
+export const matchPTC = (matchData, userHandle) => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get('/api/group/matchPTravelCamp', {
+      params: {
+        skillMin: matchData.skillMin, 
+        skillMax: matchData.skillMax,
+        handle: userHandle
+      }
+    }) 
+    .then(res =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: res.data
+      })
+    )
+    .catch(_err =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: null
+      })
+    );
+};
+
+// matchPTCL - Travel and Climb
+export const matchPTCL = (matchData, userHandle) => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get('/api/group/matchPTravelClimb', {
+      params: {
+        skillMin: matchData.skillMin, 
+        skillMax: matchData.skillMax,
+        handle: userHandle
+      }
+    }) 
+    .then(res =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: res.data
+      })
+    )
+    .catch(_err =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: null
+      })
+    );
+};
+
+// matchPT - Travel
+export const matchPT = (matchData, userHandle) => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get('/api/group/matchPTravel', {
+      params: {
+        skillMin: matchData.skillMin, 
+        skillMax: matchData.skillMax,
+        handle: userHandle
+      }
+    }) 
+    .then(res =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: res.data
+      })
+    )
+    .catch(_err =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: null
+      })
+    );
+};
+
+// matchPCC - Camp and Climb
+export const matchPCC = (matchData, userHandle) => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get('/api/group/matchPCampClimb', {
+      params: {
+        skillMin: matchData.skillMin, 
+        skillMax: matchData.skillMax,
+        country: matchData.country,
+        handle: userHandle
+      }
+    }) 
+    .then(res => {
+      dispatch({
+        type: GET_PROFILES,
+        payload: res.data
+      })
+    }
+    )
+    .catch(_err =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: null
+      })
+    );
+};
+
+// matchPC- Camp
+export const matchPC = (matchData, userHandle) => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get('/api/group/matchPCamp', {
+      params: {
+        skillMin: matchData.skillMin, 
+        skillMax: matchData.skillMax,
+        country: matchData.country,
+        handle: userHandle
+      }
+    }) 
+    .then(res =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: res.data
+      })
+    )
+    .catch(_err =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: null
+      })
+    );
+};
+
+// matchPCL - Climb
+export const matchPCL = (matchData, userHandle) => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get('/api/group/matchPClimb', {
+      params: {
+        skillMin: matchData.skillMin, 
+        skillMax: matchData.skillMax,
+        country: matchData.country,
+        handle: userHandle
+      }
+    }) 
+    .then(res =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: res.data
+      })
+    )
+    .catch(_err =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: null
+      })
+    );
+};
+
+// matchProfiles
+export const matchProfiles = (matchData, userHandle) => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get('/api/group/matchP', {
+      params: {
+        skillMin: matchData.skillMin, 
+        skillMax: matchData.skillMax,
+        country: matchData.country,
+        handle: userHandle
+      }
+    }) 
+    .then(res =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: res.data
+      })
+    )
+    .catch(_err =>
       dispatch({
         type: GET_PROFILES,
         payload: null
@@ -167,7 +380,7 @@ export const deleteAccount = () => dispatch => {
   if (window.confirm('Are you sure? This can NOT be undone!')) {
     axios
       .delete('/api/profile')
-      .then(res =>
+      .then(_res =>
         dispatch({
           type: SET_CURRENT_USER,
           payload: {}
