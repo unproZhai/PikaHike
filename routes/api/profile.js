@@ -176,6 +176,10 @@ router.post(
           { $set: profileFields },
           { new: true }
         ).then(profile => res.json(profile));
+        User.findOneAndUpdate(
+          { _id: req.user.id },
+          { $set: { create_profile: true } }
+        );
       } else { // Create
         // Check if handle exists
         Profile.findOne({ handle: profileFields.handle }).then(profile => {
@@ -186,6 +190,10 @@ router.post(
           // Save Profile
           new Profile(profileFields).save().then(profile => res.json(profile));
         });
+        User.findOneAndUpdate(
+          { _id: req.user.id },
+          { $set: { create_profile: true } }
+        );
       }
     });
   }

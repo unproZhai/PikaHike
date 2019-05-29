@@ -19,67 +19,68 @@ class Navbar extends Component {
     }
   }
 
+  /*
+  componentWillReceiveProps(nextProps) {
+  if(nextProps.auth.user !== null){
+    console.log(nextProps);
+    if(!nextProps.auth.user.create_profile){
+      this.props.history.push('/create-profile');
+    }
+  }
+}*/
 
   render() {
     const { isAuthenticated, user } = this.props.auth;
 
     let authLinks;
 
-    console.log(this.props.auth)
-    //user.create_profile
-    
-      authLinks = (
-        <ul className="navbar-nav ml-auto ">
-          <form className="form-inline">
-            <button className="btn btn-elegant search-button " type="submit" onClick={this.onSearchClick.bind()}>Search</button>
-            <input className="form-control mt-1 mb-1" type="search" placeholder="Search" aria-label="Search" id="query" />
-          </form>
-          <li className="nav-item">
-            <Link className="nav-link text-light mt-1 mb-1" to="/feed">
-              Home
-          </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link text-light mt-1 mb-1" to="/groups-landing">
-              {' '}
-              Groups
-          </Link>
-          </li>
-
-          <li className="nav-item dropdown align-items-center mt-1 mb-1">
-            <a className="nav-link dropdown-toggle text-light" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {user.name}
-            </a>
-            <div className="dropdown-menu bg-dark" aria-labelledby="userDropdown">
-              <Link className="nav-link mt-1 mb-1 text-light" to="/profile">
-                Profile
-            </Link>
-              <Link className="nav-link mt-1 mb-1 text-light" to="/matchmaking">
-                Matchmaking
-            </Link>
-              <Link className="nav-link mt-1 mb-1 text-light" to="/user-settings">
-                Settings
-            </Link>
-              <a onClick={this.onLogoutClick.bind(this)} className="nav-link text-light mt-1 mb-1" href="/">
-                Logout
-            </a>
-            </div>
-          </li>
-        </ul>
-      );
-    
-
-    /*
-    else {
-      authLinks = (
-        <ul className="navbar-nav ml-auto ">
-          <a onClick={this.onLogoutClick.bind(this)} className="nav-link text-light mt-1 mb-1" href="/">
-            Logout
-            </a>
-        </ul>
-      );
+    if(user.create_profile !== null && user.create_profile !== undefined){
+      console.log(user.create_profile);
+      if(!user.create_profile){
+        console.log(user.create_profile);
+        this.props.history.push('/create-profile');
+      }
     }
-    */
+
+    authLinks = (
+      <ul className="navbar-nav ml-auto ">
+        <form className="form-inline">
+          <button className="btn btn-elegant search-button " type="submit" onClick={this.onSearchClick.bind()}>Search</button>
+          <input className="form-control mt-1 mb-1" type="search" placeholder="Search" aria-label="Search" id="query" />
+        </form>
+        <li className="nav-item">
+          <Link className="nav-link text-light mt-1 mb-1" to="/feed">
+            Home
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link text-light mt-1 mb-1" to="/groups-landing">
+            {' '}
+            Groups
+          </Link>
+        </li>
+
+        <li className="nav-item dropdown align-items-center mt-1 mb-1">
+          <a className="nav-link dropdown-toggle text-light" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {user.name}
+          </a>
+          <div className="dropdown-menu bg-dark" aria-labelledby="userDropdown">
+            <Link className="nav-link mt-1 mb-1 text-light" to="/profile">
+              Profile
+            </Link>
+            <Link className="nav-link mt-1 mb-1 text-light" to="/matchmaking">
+              Matchmaking
+            </Link>
+            <Link className="nav-link mt-1 mb-1 text-light" to="/user-settings">
+              Settings
+            </Link>
+            <a onClick={this.onLogoutClick.bind(this)} className="nav-link text-light mt-1 mb-1" href="/">
+              Logout
+            </a>
+          </div>
+        </li>
+      </ul>
+    );
 
     // Links when not logged in
     const guestLinks = (
@@ -115,7 +116,7 @@ class Navbar extends Component {
     return (
       <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4 ">
         <div className="container">
-        {user.create_profile ? created : notCreated}
+          {created}
           <button
             className="navbar-toggler"
             type="button"
